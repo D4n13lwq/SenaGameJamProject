@@ -1,70 +1,165 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-#region crimen de guerra 2
 [RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(Detector))]
 [RequireComponent(typeof(PlayerInput))]
-#endregion
-
 public class Player : MonoBehaviour
 {
-    PlayerInput _playerInput;
+    [SerializeField] float acceleration = 60f;
+    [SerializeField] float deceleration = 80f;
+    [SerializeField] float rotationSpeed = 720f;
 
-    Animator _anim;
-    Rigidbody _rb;
-    Detector _groundDetector;
+    [SerializeField] int maxAirJumps = 1;
 
-    bool _ohMyGodTheyKilledKenny = false;
+    [SerializeField] float fallGravityMultiplier = 2f;
 
-    public PlayerInput PlayerInput { get => _playerInput; set => _playerInput = value; }
-    public Animator Anim { get => _anim; set => _anim = value; }
-    public Rigidbody Rb { get => _rb; set => _rb = value; }
-    public Detector GroundDetector { get => _groundDetector; set => _groundDetector = value; }
-    public bool OhMyGodTheyKilledKenny { get => _ohMyGodTheyKilledKenny; set => _ohMyGodTheyKilledKenny = value; }
+    public PlayerInput PlayerInput { get; private set; }
+    public Rigidbody Rb { get; private set; }
+    public Animator Anim { get; private set; }
 
-    private void Awake()
+    Detector groundDetector;
+
+    InputAction moveAction;
+    InputAction jumpAction;
+
+    public Vector2 MoveInput { get; private set; }
+    public bool JumpHeld => jumpAction != null && jumpAction.IsPressed();
+    public bool IsGrounded => groundDetector.GetSomethingDetected();
+
+    public bool MovementEnabled { get; set; } = true;
+    public float HorizontalSpeed { get; set; } = 5f;
+
+    int airJumpsUsed = 0;
+    public bool CanAirJump => airJumpsUsed < maxAirJumps;
+    public void ConsumeAirJump() => airJumpsUsed++;
+
+    public HangZone CurrentHangZone { get; private set; }
+    public HangZone ActiveHangZone { get; private set; }
+    public bool IsHanging => ActiveHangZone != null;
+    public bool CanHang => CurrentHangZone != null && IsGrounded && !IsHanging;
+
+    public Vector3 StandPosition { get; private set; }
+    public Vector3 KinematicTarget { get; set; }
+
+    public void BeginHang(HangZone zone)
+    {
+        ActiveHangZone = zone;
+        StandPosition = Rb.position;
+        KinematicTarget = Rb.position;
+        MovementEnabled = false;
+
+        Rb.linearVelocity = Vector3.zero;
+        Rb.isKinematic = true;
+    }
+
+    public void EndHang()
+    {
+        if (!IsHanging) return;
+
+        Rb.isKinematic = false;
+        Rb.position = KinematicTarget;
+        Rb.linearVelocity = Vector3.zero;
+
+        ActiveHangZone = null;
+        MovementEnabled = true;
+    }
+
+    bool OhMyGodTheyKilledKenny = false;
+    float facingAngle = 90f;
+
+    void Awake()
     {
         Initialize();
     }
 
     public void Initialize()
     {
-        _playerInput = GetComponent<PlayerInput>();
+        PlayerInput = GetComponent<PlayerInput>();
+        Anim = GetComponent<Animator>();
+        Rb = GetComponent<Rigidbody>();
+        groundDetector = GetComponent<Detector>();
 
-        _anim = GetComponent<Animator>();
-        _rb = GetComponent<Rigidbody>();
-        _groundDetector = GetComponent<Detector>();
+        Rb.interpolation = RigidbodyInterpolation.Interpolate;
+        Rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        Rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
 
-        _playerInput.actions.FindActionMap("Player").Enable();
-        _playerInput.actions.FindActionMap("UI").Disable();
+        InputActionMap playerMap = PlayerInput.actions.FindActionMap("Player");
+        playerMap.Enable();
+        PlayerInput.actions.FindActionMap("UI").Disable();
+
+        moveAction = playerMap.FindAction("Move");
+        jumpAction = playerMap.FindAction("Jump");
     }
 
-    private void Update()
+    void Update()
     {
+        MoveInput = moveAction.ReadValue<Vector2>();
+
+        bool grounded = IsGrounded;
+
+        if (grounded && !IsHanging && Rb.linearVelocity.y <= 0.01f)
+            airJumpsUsed = 0;
+
+        if (!IsHanging && jumpAction != null && jumpAction.WasPressedThisFrame())
+        {
+            if (grounded)
+                Anim.SetTrigger("Jump");
+            else if (CanAirJump)
+                Anim.SetTrigger("DoubleJump");
+        }
+
         CheckAnimatorTransitions();
     }
 
-    #region crimen de guerra 1
+    void FixedUpdate()
+    {
+        if (IsHanging)
+        {
+            Rb.MovePosition(KinematicTarget);
+            return;
+        }
+
+        if (!MovementEnabled) return;
+
+        Vector3 velocity = Rb.linearVelocity;
+
+        float targetX = MoveInput.x * HorizontalSpeed;
+        float rate = Mathf.Abs(targetX) > 0.01f ? acceleration : deceleration;
+        velocity.x = Mathf.MoveTowards(velocity.x, targetX, rate * Time.fixedDeltaTime);
+        velocity.z = 0f;
+
+        if (velocity.y < 0f)
+            velocity += Physics.gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
+
+        Rb.linearVelocity = velocity;
+
+        if (Mathf.Abs(MoveInput.x) > 0.01f)
+            facingAngle = MoveInput.x > 0f ? 90f : -90f;
+
+        Quaternion targetRotation = Quaternion.Euler(0f, facingAngle, 0f);
+        Rb.MoveRotation(Quaternion.RotateTowards(Rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out HangZone zone))
+            CurrentHangZone = zone;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out HangZone zone) && zone == CurrentHangZone)
+            CurrentHangZone = null;
+    }
+
     public void CheckAnimatorTransitions()
     {
-        //Settear verificacion de caminar
-        _anim.SetFloat("HorizontalMovementValue", _playerInput.actions.FindActionMap("Player").FindAction("Move").ReadValue<Vector2>().x);
-
-        //Settear verificacion de velocidad en Y
-        _anim.SetFloat("RBVerticalSpeed", _rb.linearVelocity.y);
-
-        //Settear verifiacion de suelo
-        _anim.SetBool("OnGround", _groundDetector.GetSomethingDetected());
-
-        //Settear botones de escalar
-        _anim.SetBool("ClimbUp", _playerInput.actions.FindActionMap("Player").FindAction("Move").ReadValue<Vector2>().y > 0.5f);
-        _anim.SetBool("ClimbDown", _playerInput.actions.FindActionMap("Player").FindAction("Move").ReadValue<Vector2>().y < -0.5f);
-
-        //Settear salto
-        _anim.SetBool("PressJumpButton", _playerInput.actions.FindActionMap("Player").FindAction("Jump").IsPressed());
-
-        //Settear muerte
-        _anim.SetBool("OhMyGodTheyKilledKenny", _ohMyGodTheyKilledKenny);
+        Anim.SetFloat("HorizontalMovementValue", MoveInput.x);
+        Anim.SetFloat("RBVerticalSpeed", Rb.linearVelocity.y);
+        Anim.SetBool("OnGround", IsGrounded);
+        Anim.SetBool("ClimbUp", MoveInput.y > 0.5f);
+        Anim.SetBool("ClimbDown", MoveInput.y < -0.5f);
+        Anim.SetBool("CanHang", CanHang);
+        Anim.SetBool("OhMyGodTheyKilledKenny", OhMyGodTheyKilledKenny);
     }
-    #endregion
 }

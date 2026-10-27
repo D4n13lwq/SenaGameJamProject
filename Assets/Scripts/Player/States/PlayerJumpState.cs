@@ -2,50 +2,39 @@ using UnityEngine;
 
 public class PlayerJumpState : BasePlayerState
 {
-    [SerializeField] float jumpFoce = 5f;
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float rotationSpeed = 720f;
+    [Tooltip("Velocidad vertical que se asigna directamente a rb.linearVelocity.y al entrar.")]
+    [SerializeField] protected float jumpForce = 8f;
+    [SerializeField] protected float speed = 5f;
 
-    private Vector2 moveInput;
+    [SerializeField, Range(0f, 1f)] float jumpCutMultiplier = 0.35f;
+
+    bool jumpCut;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        player.Rb.linearVelocity = new(player.Rb.linearVelocity.x, jumpFoce, player.Rb.linearVelocity.z);
+
+        player.MovementEnabled = true;
+        player.HorizontalSpeed = speed;
+        player.Anim.ResetTrigger("Jump");
+
+        Vector3 velocity = player.Rb.linearVelocity;
+        velocity.y = jumpForce;
+        player.Rb.linearVelocity = velocity;
+
+        jumpCut = false;
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        moveInput = player.PlayerInput.actions.FindActionMap("Player").FindAction("Move").ReadValue<Vector2>();
-    }
+        if (jumpCut) return;
 
-    public override void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
         Vector3 velocity = player.Rb.linearVelocity;
-
-        velocity.x = moveInput.x * speed;
-        velocity.z = 0f;
-
-        player.Rb.linearVelocity = velocity;
-
-        if (Mathf.Abs(moveInput.x) > 0.01f)
+        if (!player.JumpHeld && velocity.y > 0f)
         {
-            float targetAngle = moveInput.x > 0f ? 90f : -90f;
-
-            Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
-
-            player.transform.rotation = Quaternion.RotateTowards(player.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            velocity.y *= jumpCutMultiplier;
+            player.Rb.linearVelocity = velocity;
+            jumpCut = true;
         }
-    }
-
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        Vector3 velocity = player.Rb.linearVelocity;
-
-        velocity.x = 0f;
-        velocity.z = 0f;
-
-        player.Rb.linearVelocity = velocity;
-        moveInput = Vector2.zero;
     }
 }
