@@ -1,14 +1,21 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//Dios bendiga a quien entienda este script
+
 [RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(Detector))]
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
+    #region Crimen de guerra 1
     [Header("Movimiento horizontal")]
     [SerializeField] float acceleration = 60f;
     [SerializeField] float deceleration = 80f;
     [SerializeField] float rotationSpeed = 720f;
+
+    [Header("Rotación hacia la cámara")]
+    [SerializeField, Range(0f, 90f)] float cameraFacingAngle = 20f;
+    [SerializeField] Transform cameraTransform;
 
     [Header("Coyote time")]
     [SerializeField] float coyoteTime = 0.12f;
@@ -50,6 +57,7 @@ public class Player : MonoBehaviour
     public Vector3 StandPosition { get; private set; }
     public Vector3 KinematicTarget { get; set; }
     public Quaternion KinematicRotation { get; set; }
+    #endregion
 
     public void BeginHang(HangZone zone)
     {
@@ -61,6 +69,7 @@ public class Player : MonoBehaviour
 
         Rb.linearVelocity = Vector3.zero;
         Rb.isKinematic = true;
+
         Rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
@@ -81,10 +90,10 @@ public class Player : MonoBehaviour
     bool OhMyGodTheyKilledKenny = false;
     float facingAngle = 90f;
 
-    //void Awake()
-    //{
-    //    Initialize();
-    //}
+    void Awake()
+    {
+        Initialize();
+    }
 
     public void Initialize()
     {
@@ -100,6 +109,9 @@ public class Player : MonoBehaviour
         InputActionMap playerMap = PlayerInput.actions.FindActionMap("Player");
         playerMap.Enable();
         PlayerInput.actions.FindActionMap("UI").Disable();
+
+        if (cameraTransform == null && Camera.main != null)
+            cameraTransform = Camera.main.transform;
 
         moveAction = playerMap.FindAction("Move");
         jumpAction = playerMap.FindAction("Jump");
@@ -167,8 +179,21 @@ public class Player : MonoBehaviour
         if (Mathf.Abs(MoveInput.x) > 0.01f)
             facingAngle = MoveInput.x > 0f ? 90f : -90f;
 
-        Quaternion targetRotation = Quaternion.Euler(0f, facingAngle, 0f);
+        Quaternion targetRotation = Quaternion.Euler(0f, GetCameraBiasedYaw(facingAngle), 0f);
         Rb.MoveRotation(Quaternion.RotateTowards(Rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+    }
+
+    float GetCameraBiasedYaw(float sideAngle)
+    {
+        if (cameraTransform == null || cameraFacingAngle <= 0f) return sideAngle;
+
+        Vector3 toCamera = cameraTransform.position - Rb.position;
+        toCamera.y = 0f;
+        if (toCamera.sqrMagnitude < 0.0001f) return sideAngle;
+
+        float cameraYaw = Mathf.Atan2(toCamera.x, toCamera.z) * Mathf.Rad2Deg;
+
+        return Mathf.MoveTowardsAngle(sideAngle, cameraYaw, cameraFacingAngle);
     }
 
     void OnTriggerEnter(Collider other)

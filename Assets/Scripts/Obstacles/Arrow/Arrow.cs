@@ -15,13 +15,10 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.TryGetComponent(out Player player))
-        {
             rb.linearVelocity = Vector3.zero;
             rb.useGravity = false;
             rb.isKinematic = true;
             StartCoroutine(DestroyArrow());
-        }
     }
 
     IEnumerator DestroyArrow()

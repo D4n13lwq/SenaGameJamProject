@@ -219,7 +219,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   offset: {x: 0, y: -0.1, z: 0}
-  size: {x: 0.75, y: 0.125, z: 0.75}
+  size: {x: 0.5, y: 0.125, z: 0.5}
   colliders: []
 --- !u!114 &1612780676959521719
 MonoBehaviour:
@@ -266,6 +266,8 @@ MonoBehaviour:
   acceleration: 100
   deceleration: 80
   rotationSpeed: 720
+  cameraFacingAngle: 45
+  cameraTransform: {fileID: 0}
   coyoteTime: 0.1
-  maxAirJumps: 1
+  maxAirJumps: 0
   fallGravityMultiplier: 2
