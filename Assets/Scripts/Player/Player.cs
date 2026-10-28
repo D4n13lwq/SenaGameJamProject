@@ -5,12 +5,18 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
+    [Header("Movimiento horizontal")]
     [SerializeField] float acceleration = 60f;
     [SerializeField] float deceleration = 80f;
     [SerializeField] float rotationSpeed = 720f;
 
+    [Header("Coyote time")]
+    [SerializeField] float coyoteTime = 0.12f;
+
+    [Header("Saltos en el aire")]
     [SerializeField] int maxAirJumps = 1;
 
+    [Header("Gravedad")]
     [SerializeField] float fallGravityMultiplier = 2f;
 
     public PlayerInput PlayerInput { get; private set; }
@@ -29,6 +35,9 @@ public class Player : MonoBehaviour
     public bool MovementEnabled { get; set; } = true;
     public float HorizontalSpeed { get; set; } = 5f;
 
+    float coyoteTimer = 0f;
+    public bool CanGroundJump => coyoteTimer > 0f;
+
     int airJumpsUsed = 0;
     public bool CanAirJump => airJumpsUsed < maxAirJumps;
     public void ConsumeAirJump() => airJumpsUsed++;
@@ -40,16 +49,19 @@ public class Player : MonoBehaviour
 
     public Vector3 StandPosition { get; private set; }
     public Vector3 KinematicTarget { get; set; }
+    public Quaternion KinematicRotation { get; set; }
 
     public void BeginHang(HangZone zone)
     {
         ActiveHangZone = zone;
         StandPosition = Rb.position;
         KinematicTarget = Rb.position;
+        KinematicRotation = Rb.rotation;
         MovementEnabled = false;
 
         Rb.linearVelocity = Vector3.zero;
         Rb.isKinematic = true;
+        Rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     public void EndHang()
@@ -60,6 +72,8 @@ public class Player : MonoBehaviour
         Rb.position = KinematicTarget;
         Rb.linearVelocity = Vector3.zero;
 
+        Rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+
         ActiveHangZone = null;
         MovementEnabled = true;
     }
@@ -67,10 +81,10 @@ public class Player : MonoBehaviour
     bool OhMyGodTheyKilledKenny = false;
     float facingAngle = 90f;
 
-    void Awake()
-    {
-        Initialize();
-    }
+    //void Awake()
+    //{
+    //    Initialize();
+    //}
 
     public void Initialize()
     {
@@ -95,17 +109,33 @@ public class Player : MonoBehaviour
     {
         MoveInput = moveAction.ReadValue<Vector2>();
 
-        bool grounded = IsGrounded;
+        bool standing = IsGrounded && !IsHanging && Rb.linearVelocity.y <= 0.01f;
 
-        if (grounded && !IsHanging && Rb.linearVelocity.y <= 0.01f)
+        if (standing)
+        {
             airJumpsUsed = 0;
+            coyoteTimer = coyoteTime;
+        }
+        else if (IsHanging)
+        {
+            coyoteTimer = 0f;
+        }
+        else
+        {
+            coyoteTimer -= Time.deltaTime;
+        }
 
         if (!IsHanging && jumpAction != null && jumpAction.WasPressedThisFrame())
         {
-            if (grounded)
+            if (CanGroundJump)
+            {
                 Anim.SetTrigger("Jump");
+                coyoteTimer = 0f;
+            }
             else if (CanAirJump)
+            {
                 Anim.SetTrigger("DoubleJump");
+            }
         }
 
         CheckAnimatorTransitions();
@@ -116,6 +146,7 @@ public class Player : MonoBehaviour
         if (IsHanging)
         {
             Rb.MovePosition(KinematicTarget);
+            Rb.MoveRotation(KinematicRotation);
             return;
         }
 
@@ -161,5 +192,10 @@ public class Player : MonoBehaviour
         Anim.SetBool("ClimbDown", MoveInput.y < -0.5f);
         Anim.SetBool("CanHang", CanHang);
         Anim.SetBool("OhMyGodTheyKilledKenny", OhMyGodTheyKilledKenny);
+    }
+
+    public void Dead()
+    {
+        OhMyGodTheyKilledKenny = true;
     }
 }

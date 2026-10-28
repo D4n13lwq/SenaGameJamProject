@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerWalkState : BasePlayerState
 {
-    [SerializeField] private float speed = 5f;
+    [SerializeField] float speed = 5f;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

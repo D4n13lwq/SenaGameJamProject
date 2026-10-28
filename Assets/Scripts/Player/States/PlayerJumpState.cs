@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerJumpState : BasePlayerState
 {
-    [Tooltip("Velocidad vertical que se asigna directamente a rb.linearVelocity.y al entrar.")]
     [SerializeField] protected float jumpForce = 8f;
     [SerializeField] protected float speed = 5f;
 
