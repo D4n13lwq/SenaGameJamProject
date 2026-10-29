@@ -1,29 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-//Dios bendiga a quien entienda este script
-
 [RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(Detector))]
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
     #region Crimen de guerra 1
-    [Header("Movimiento horizontal")]
     [SerializeField] float acceleration = 60f;
     [SerializeField] float deceleration = 80f;
     [SerializeField] float rotationSpeed = 720f;
 
-    [Header("Rotación hacia la cámara")]
     [SerializeField, Range(0f, 90f)] float cameraFacingAngle = 20f;
     [SerializeField] Transform cameraTransform;
 
-    [Header("Coyote time")]
     [SerializeField] float coyoteTime = 0.12f;
 
-    [Header("Saltos en el aire")]
     [SerializeField] int maxAirJumps = 1;
 
-    [Header("Gravedad")]
     [SerializeField] float fallGravityMultiplier = 2f;
 
     public PlayerInput PlayerInput { get; private set; }
@@ -57,6 +50,10 @@ public class Player : MonoBehaviour
     public Vector3 StandPosition { get; private set; }
     public Vector3 KinematicTarget { get; set; }
     public Quaternion KinematicRotation { get; set; }
+
+    public bool InCutscene { get; private set; }
+    public Transform EntranceDoor { get; set; }
+    public LevelExit CurrentExit { get; private set; }
     #endregion
 
     public void BeginHang(HangZone zone)
@@ -85,6 +82,45 @@ public class Player : MonoBehaviour
 
         ActiveHangZone = null;
         MovementEnabled = true;
+    }
+
+    public void BeginCutscene(Vector3 position, Quaternion rotation)
+    {
+        InCutscene = true;
+        MovementEnabled = false;
+
+        if (!Rb.isKinematic)
+            Rb.linearVelocity = Vector3.zero;
+        Rb.isKinematic = true;
+        Rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        KinematicTarget = position;
+        KinematicRotation = rotation;
+        Rb.position = position;
+        Rb.rotation = rotation;
+        transform.SetPositionAndRotation(position, rotation);
+    }
+
+    public void EndCutscene()
+    {
+        if (!InCutscene) return;
+
+        Rb.isKinematic = false;
+        Rb.position = KinematicTarget;
+        Rb.linearVelocity = Vector3.zero;
+        Rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+
+        InCutscene = false;
+        MovementEnabled = true;
+    }
+
+    public bool StartExit(LevelExit exit)
+    {
+        if (InCutscene || IsHanging || !IsGrounded || CurrentExit != null) return false;
+
+        CurrentExit = exit;
+        Anim.SetTrigger("ExitLevel");
+        return true;
     }
 
     bool OhMyGodTheyKilledKenny = false;
@@ -119,7 +155,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        MoveInput = moveAction.ReadValue<Vector2>();
+        MoveInput = InCutscene ? Vector2.zero : moveAction.ReadValue<Vector2>();
 
         bool standing = IsGrounded && !IsHanging && Rb.linearVelocity.y <= 0.01f;
 
@@ -137,7 +173,7 @@ public class Player : MonoBehaviour
             coyoteTimer -= Time.deltaTime;
         }
 
-        if (!IsHanging && jumpAction != null && jumpAction.WasPressedThisFrame())
+        if (!IsHanging && !InCutscene && CurrentExit == null && jumpAction != null && jumpAction.WasPressedThisFrame())
         {
             if (CanGroundJump)
             {
@@ -155,7 +191,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (IsHanging)
+        if (IsHanging || InCutscene)
         {
             Rb.MovePosition(KinematicTarget);
             Rb.MoveRotation(KinematicRotation);

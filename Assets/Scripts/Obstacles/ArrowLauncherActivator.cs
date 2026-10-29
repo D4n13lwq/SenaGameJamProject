@@ -7,10 +7,25 @@ public class ArrowLauncherActivator : MonoBehaviour
     [SerializeField] float repetitionTime;
     float timer;
 
+    private void Awake()
+    {
+        ObstacleReset.OnReset += ResetObstacle;
+    }
+
+    private void OnDestroy()
+    {
+        ObstacleReset.OnReset -= ResetObstacle;
+    }
+
     public void ActivateObstacle()
     {
         timer = 0;
         obstacle.LaunchArrow();
+    }
+
+    void ResetObstacle()
+    {
+        timer = 0;
     }
 
     private void OnTriggerEnter(Collider other)

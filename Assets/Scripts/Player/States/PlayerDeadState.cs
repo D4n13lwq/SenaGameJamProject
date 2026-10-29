@@ -7,6 +7,7 @@ public class PlayerDeadState : BasePlayerState
     [SerializeField] float offsetZ;
     PlayerSpawner playerSpawner;
     float timer;
+    bool respawned;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -16,6 +17,7 @@ public class PlayerDeadState : BasePlayerState
         player.GetComponent<Collider>().enabled = false;
         player.enabled = false;
         timer = 0;
+        respawned = false;
         player.transform.eulerAngles = new(player.transform.eulerAngles.x, rotationY, player.transform.eulerAngles.z);
         player.transform.position = new(player.transform.position.x, player.transform.position.y, player.transform.position.z + offsetZ);
         playerSpawner = FindAnyObjectByType<PlayerSpawner>();
@@ -23,8 +25,14 @@ public class PlayerDeadState : BasePlayerState
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (respawned) return;
+
         if (timer >= disappearTime)
         {
+            respawned = true;
+
+            ObstacleReset.ResetAll();
+
             playerSpawner.SpawnPlayer();
             Destroy(player.gameObject);
         }

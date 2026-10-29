@@ -54,6 +54,8 @@ public class PlayerClimbDownState : BasePlayerState
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        base.OnStateExit(animator, stateInfo, layerIndex);
+
         if (!active) return;
         player.KinematicTarget = end;
         player.KinematicRotation = BackToCamera;
