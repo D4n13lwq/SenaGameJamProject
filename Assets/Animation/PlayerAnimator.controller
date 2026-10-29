@@ -73,12 +73,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: OnGround
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: OnFinish
-    m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: RBVerticalSpeed
     m_EventTreshold: 0.125
+  - m_ConditionMode: 1
+    m_ConditionEvent: ExitLevel
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1020386676212811494}
   m_Solo: 0
@@ -104,12 +104,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: OnGround
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: OnFinish
-    m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: RBVerticalSpeed
     m_EventTreshold: 0.125
+  - m_ConditionMode: 1
+    m_ConditionEvent: ExitLevel
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1020386676212811494}
   m_Solo: 0
@@ -239,8 +239,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c4cdc5b584b8c4b8b4682fe8df2999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJumpState
+  stateSound: {fileID: 8300000, guid: 462e200a765362a4e9c3aa1b9b8e20e6, type: 3}
+  loopSound: 0
+  soundVolume: 1
   jumpForce: 8
-  speed: 5
+  speed: 8
   jumpCutMultiplier: 0.5
 --- !u!1102 &-6910243381832727378
 AnimatorState:
@@ -288,7 +291,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75a7e3584a5c66f49ad36a89e1cb91f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWalkState
-  speed: 5
+  stateSound: {fileID: 8300000, guid: 42adea61b1dec8e46ae703faef89e9b1, type: 3}
+  loopSound: 1
+  soundVolume: 1
+  speed: 8
 --- !u!1101 &-6200547233384479033
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -328,12 +334,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: OnGround
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: OnFinish
-    m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: RBVerticalSpeed
     m_EventTreshold: 0.125
+  - m_ConditionMode: 1
+    m_ConditionEvent: ExitLevel
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1020386676212811494}
   m_Solo: 0
@@ -360,7 +366,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d05b738c011a64e8597c3b51ec8b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHangLeftState
-  hangSpeed: 1.5
+  stateSound: {fileID: 8300000, guid: 4fb31cb2bc09672478d34641da7adc64, type: 3}
+  loopSound: 1
+  soundVolume: 1
+  hangSpeed: 3
 --- !u!1101 &-5914269836132858943
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -398,8 +407,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a32601e5eedfb14aaac535823fd118c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDoubleJumpState
+  stateSound: {fileID: 8300000, guid: 462e200a765362a4e9c3aa1b9b8e20e6, type: 3}
+  loopSound: 0
+  soundVolume: 1
   jumpForce: 8
-  speed: 5
+  speed: 8
   jumpCutMultiplier: 0.7
 --- !u!1101 &-5494106857283304006
 AnimatorStateTransition:
@@ -544,18 +556,21 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: EntranceDone
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6910243381832727378}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.1
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_ExitTime: 0
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -571,6 +586,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35493bc35d989474d8e6b35006086416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerClimbUpState
+  stateSound: {fileID: 8300000, guid: 8d0ffcdbcb4fcc84590048bb0a99e717, type: 3}
+  loopSound: 0
+  soundVolume: 1
 --- !u!1101 &-3847214849310660747
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -698,6 +716,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-3212182375364160144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122076e651159b04cb2f9f9311f25794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEntranceState
+  stateSound: {fileID: 8300000, guid: 42adea61b1dec8e46ae703faef89e9b1, type: 3}
+  loopSound: 0
+  soundVolume: 1
+  walkSpeed: 2
 --- !u!114 &-3098405761385686332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -710,6 +744,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1999a0dea1a514db6e6056cefaa3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHoldState
+  stateSound: {fileID: 0}
+  loopSound: 0
+  soundVolume: 1
 --- !u!1102 &-2808298111391693249
 AnimatorState:
   serializedVersion: 6
@@ -750,6 +787,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1698afbedd43848b67b7eac1cca9c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerClimbDownState
+  stateSound: {fileID: 8300000, guid: 8b61fb55f2c22e84aa7a4f96b199f14d, type: 3}
+  loopSound: 0
+  soundVolume: 1
   turnPortion: 0.25
 --- !u!114 &-2350331096042946456
 MonoBehaviour:
@@ -763,7 +803,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b83ff8d2f51e1bd4792013b4028692e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHangRightState
-  hangSpeed: 1.5
+  stateSound: {fileID: 8300000, guid: 4fb31cb2bc09672478d34641da7adc64, type: 3}
+  loopSound: 1
+  soundVolume: 1
+  hangSpeed: 3
 --- !u!1101 &-1976883866616570130
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -898,12 +941,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: OnGround
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: OnFinish
-    m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: RBVerticalSpeed
     m_EventTreshold: 0.125
+  - m_ConditionMode: 1
+    m_ConditionEvent: ExitLevel
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1020386676212811494}
   m_Solo: 0
@@ -929,7 +972,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 1477614817605113320}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -938,7 +982,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: -6026238383205884369, guid: c9f04946a8b4fa843a1f189d3d663f83, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1021,6 +1065,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 208f938022b4dec429d9d45eef090997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDeadState
+  stateSound: {fileID: 8300000, guid: 8dffce162dab5a847a196e8024d4a2b5, type: 3}
+  loopSound: 0
+  soundVolume: 1
   disappearTime: 3
   rotationY: 180
   offsetZ: -2
@@ -1095,6 +1142,18 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: CanHang
     m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: EntranceDone
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: ExitLevel
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -1241,6 +1300,22 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &1477614817605113320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c898405bd34e33343aee6b290561c302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerExitState
+  stateSound: {fileID: 8300000, guid: 42adea61b1dec8e46ae703faef89e9b1, type: 3}
+  loopSound: 0
+  soundVolume: 1
+  walkSpeed: 2
 --- !u!1101 &1635026550527270730
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1655,7 +1730,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4253471109156356527}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -3212182375364160144}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1664,7 +1740,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: -6026238383205884369, guid: c9f04946a8b4fa843a1f189d3d663f83, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1813,6 +1889,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afceda78162c84d469cf3b69ee01b01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  stateSound: {fileID: 0}
+  loopSound: 0
+  soundVolume: 1
 --- !u!1101 &5815560267503257393
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1886,12 +1965,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: OnGround
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: OnFinish
-    m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: RBVerticalSpeed
     m_EventTreshold: 0.125
+  - m_ConditionMode: 1
+    m_ConditionEvent: ExitLevel
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1020386676212811494}
   m_Solo: 0
@@ -2086,12 +2165,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: OnGround
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: OnFinish
-    m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: RBVerticalSpeed
     m_EventTreshold: 0.125
+  - m_ConditionMode: 1
+    m_ConditionEvent: ExitLevel
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1020386676212811494}
   m_Solo: 0

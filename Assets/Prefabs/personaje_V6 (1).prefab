@@ -125,6 +125,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c9f04946a8b4fa843a1f189d3d663f83, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1630997365996958822}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c9f04946a8b4fa843a1f189d3d663f83, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 931526933723565624}
   m_SourcePrefab: {fileID: 100100000, guid: c9f04946a8b4fa843a1f189d3d663f83, type: 3}
 --- !u!1 &5288529646214947999 stripped
 GameObject:
@@ -217,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Detector
   allowedLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   offset: {x: 0, y: -0.1, z: 0}
   size: {x: 0.5, y: 0.125, z: 0.5}
   colliders: []
@@ -266,8 +269,16 @@ MonoBehaviour:
   acceleration: 100
   deceleration: 80
   rotationSpeed: 720
-  cameraFacingAngle: 45
+  cameraFacingAngle: 30
   cameraTransform: {fileID: 0}
   coyoteTime: 0.1
   maxAirJumps: 0
   fallGravityMultiplier: 2
+--- !u!81 &931526933723565624
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288529646214947999}
+  m_Enabled: 1

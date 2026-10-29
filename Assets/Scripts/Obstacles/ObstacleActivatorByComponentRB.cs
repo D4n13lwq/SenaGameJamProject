@@ -7,6 +7,26 @@ public class ObstacleActivatorByComponentRB : MonoBehaviour
 
     [SerializeField] float gravityMultiplier = 1f;
 
+    Vector3 startPosition;
+    Quaternion startRotation;
+    bool startKinematic;
+    bool startUseGravity;
+
+    private void Awake()
+    {
+        startPosition = obstacle.transform.position;
+        startRotation = obstacle.transform.rotation;
+        startKinematic = obstacle.isKinematic;
+        startUseGravity = obstacle.useGravity;
+
+        ObstacleReset.OnReset += ResetObstacle;
+    }
+
+    private void OnDestroy()
+    {
+        ObstacleReset.OnReset -= ResetObstacle;
+    }
+
     private void OnEnable()
     {
         if (disableObstacleOnEnable)
@@ -20,6 +40,24 @@ public class ObstacleActivatorByComponentRB : MonoBehaviour
     {
         obstacle.isKinematic = false;
         obstacle.useGravity = true;
+    }
+
+    void ResetObstacle()
+    {
+        if (obstacle == null) return;
+
+        if (!obstacle.isKinematic)
+        {
+            obstacle.linearVelocity = Vector3.zero;
+            obstacle.angularVelocity = Vector3.zero;
+        }
+
+        obstacle.isKinematic = disableObstacleOnEnable || startKinematic;
+        obstacle.useGravity = !disableObstacleOnEnable && startUseGravity;
+
+        obstacle.transform.SetPositionAndRotation(startPosition, startRotation);
+        obstacle.position = startPosition;
+        obstacle.rotation = startRotation;
     }
 
     private void FixedUpdate()

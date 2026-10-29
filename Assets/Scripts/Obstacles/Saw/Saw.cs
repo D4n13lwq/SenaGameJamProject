@@ -10,9 +10,25 @@ public class Saw : MonoBehaviour
     [SerializeField] float distance;
     [SerializeField] bool finishOnLastPivot;
 
+    private void Awake()
+    {
+        ObstacleReset.OnReset += ResetObstacle;
+    }
+
+    private void OnDestroy()
+    {
+        ObstacleReset.OnReset -= ResetObstacle;
+    }
+
     private void OnEnable()
     {
+        ResetObstacle();
+    }
+
+    void ResetObstacle()
+    {
         currentPivotIndex = 0;
+        distance = float.MaxValue;
         transform.position = pivots[currentPivotIndex].position;
     }
 
