@@ -854,7 +854,7 @@ Transform:
   m_GameObject: {fileID: 31063849}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -11}
+  m_LocalPosition: {x: -1.86, y: 0, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6497,7 +6497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 1509314735}
   disableObstacleOnEnable: 0
-  repetitionTime: 2
+  repetitionTime: 0.2
 --- !u!65 &278663533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6517,7 +6517,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 27, y: 10, z: 5}
+  m_Size: {x: 27, y: 10, z: 3}
   m_Center: {x: 7, y: -1, z: -2}
 --- !u!1001 &281254083
 PrefabInstance:
@@ -7449,7 +7449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 593205298}
   disableObstacleOnEnable: 0
-  repetitionTime: 2
+  repetitionTime: 0.2
 --- !u!65 &320826390
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7469,7 +7469,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 27, y: 10, z: 5}
+  m_Size: {x: 27, y: 10, z: 3}
   m_Center: {x: 7, y: -1, z: -2}
 --- !u!1001 &323889410
 PrefabInstance:
@@ -11806,7 +11806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 60189775}
   disableObstacleOnEnable: 0
-  repetitionTime: 2
+  repetitionTime: 0.2
 --- !u!65 &438976947
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11826,7 +11826,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 27, y: 10, z: 5}
+  m_Size: {x: 27, y: 10, z: 3}
   m_Center: {x: 7, y: -1, z: -2}
 --- !u!1001 &439181218
 PrefabInstance:
@@ -12905,7 +12905,7 @@ Transform:
   m_GameObject: {fileID: 484204865}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -11}
+  m_LocalPosition: {x: -1.86, y: 0, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23333,7 +23333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 392284314}
   disableObstacleOnEnable: 0
-  repetitionTime: 2
+  repetitionTime: 0.2
 --- !u!65 &907935760
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23353,7 +23353,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 27, y: 10, z: 5}
+  m_Size: {x: 27, y: 10, z: 3}
   m_Center: {x: 7, y: -1, z: -2}
 --- !u!1001 &914238973
 PrefabInstance:
@@ -34687,6 +34687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1398550511}
   - component: {fileID: 1398550512}
+  - component: {fileID: 1398550513}
   m_Layer: 10
   m_Name: Plataforma
   m_TagString: Untagged
@@ -34776,6 +34777,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 14, y: 12, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1398550513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398550510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
+  level: 1
 --- !u!1001 &1400450948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39464,7 +39478,7 @@ Transform:
   m_GameObject: {fileID: 1542480103}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -11}
+  m_LocalPosition: {x: -1.86, y: 0, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -39651,7 +39665,7 @@ Transform:
   m_GameObject: {fileID: 1559374982}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -11}
+  m_LocalPosition: {x: -1.86, y: 0, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43400,7 +43414,7 @@ Transform:
   m_GameObject: {fileID: 1720658780}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -11}
+  m_LocalPosition: {x: -1.86, y: 0, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45123,7 +45137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 380363013}
   disableObstacleOnEnable: 0
-  repetitionTime: 2
+  repetitionTime: 0.2
 --- !u!65 &1775137282
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45143,7 +45157,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 27, y: 10, z: 5}
+  m_Size: {x: 27, y: 10, z: 3}
   m_Center: {x: 7, y: -1, z: -2}
 --- !u!1001 &1778882307
 PrefabInstance:
@@ -53288,6 +53302,7 @@ GameObject:
   - component: {fileID: 2084102384}
   - component: {fileID: 2084102383}
   - component: {fileID: 2084102382}
+  - component: {fileID: 2084102387}
   m_Layer: 0
   m_Name: Saw (1)
   m_TagString: Untagged
@@ -53482,6 +53497,19 @@ Transform:
   - {fileID: 1692961253}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &2084102387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084102381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
+  level: 1
 --- !u!1001 &2085038247
 PrefabInstance:
   m_ObjectHideFlags: 0
