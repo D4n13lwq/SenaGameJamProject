@@ -244,7 +244,7 @@ MonoBehaviour:
   soundVolume: 1
   jumpForce: 8
   speed: 8
-  jumpCutMultiplier: 0.5
+  jumpCutMultiplier: 0.75
 --- !u!1102 &-6910243381832727378
 AnimatorState:
   serializedVersion: 6
@@ -730,8 +730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEntranceState
   stateSound: {fileID: 8300000, guid: 42adea61b1dec8e46ae703faef89e9b1, type: 3}
   loopSound: 0
-  soundVolume: 1
-  walkSpeed: 2
+  soundVolume: 0.159
+  walkSpeed: 6
 --- !u!114 &-3098405761385686332
 MonoBehaviour:
   m_ObjectHideFlags: 1

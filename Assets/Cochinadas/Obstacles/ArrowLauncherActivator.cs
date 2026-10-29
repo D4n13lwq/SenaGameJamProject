@@ -5,6 +5,7 @@ public class ArrowLauncherActivator : MonoBehaviour
     [SerializeField] ArrowLauncher obstacle;
     [SerializeField] bool disableObstacleOnEnable;
     [SerializeField] float repetitionTime;
+    Collider coll;
     float timer;
 
     private void Awake()
@@ -31,22 +32,22 @@ public class ArrowLauncherActivator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Player>() != null)
-            ActivateObstacle();
+        {
+            coll = other;
+            if (coll != null && coll.GetComponent<Rigidbody>().isKinematic == false && other != coll)
+                ActivateObstacle();
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.GetComponent<Player>() != null)
         {
+            coll = other;
+
             timer += Time.deltaTime;
             if (timer >= repetitionTime)
                 ActivateObstacle();
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<Player>() != null)
-            timer = 0;
     }
 }

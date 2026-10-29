@@ -46,6 +46,7 @@ public class Arrow : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.useGravity = false;
         rb.isKinematic = true;
+        GetComponent<Collider>().enabled = false;
         StartCoroutine(DestroyArrow());
     }
 

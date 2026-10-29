@@ -13,9 +13,9 @@ TagManager:
   - UI
   - Damager
   - GameDecoration
-  - 
-  - 
-  - 
+  - BoxPieces
+  - CameraConfiner
+  - Pared
   - 
   - 
   - 

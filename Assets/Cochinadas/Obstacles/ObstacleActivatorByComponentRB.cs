@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ObstacleActivatorByComponentRB : MonoBehaviour
@@ -6,6 +7,7 @@ public class ObstacleActivatorByComponentRB : MonoBehaviour
     [SerializeField] bool disableObstacleOnEnable;
 
     [SerializeField] float gravityMultiplier = 1f;
+    [SerializeField] float delay = 0.5f;
 
     Vector3 startPosition;
     Quaternion startRotation;
@@ -70,6 +72,12 @@ public class ObstacleActivatorByComponentRB : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Player player))
-            ActivateObstacle();
+            StartCoroutine(FallFloor());
+    }
+
+    IEnumerator FallFloor()
+    {
+        yield return new WaitForSeconds(delay);
+        ActivateObstacle();
     }
 }

@@ -4,6 +4,11 @@ using UnityEngine;
 public class BoxDamager : MonoBehaviour
 {
     [SerializeField] float fallingThreshold = -0.1f;
+    [SerializeField] GameObject brokenBox;
+    [SerializeField] float YVelocity;
+
+    Vector3 startPosition;
+    Quaternion startRotation;
 
     Rigidbody rb;
 
@@ -14,6 +19,13 @@ public class BoxDamager : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+    }
+
+    private void OnEnable()
+    {
+        rb.linearVelocity = new(rb.linearVelocity.x, YVelocity, rb.linearVelocity.z);
     }
 
     private void FixedUpdate()
@@ -36,7 +48,13 @@ public class BoxDamager : MonoBehaviour
         if (!enabled || rb.isKinematic || !IsDamaging) return;
 
         if (other.TryGetComponent(out Player player))
+        {
             player.Dead();
+            Instantiate(brokenBox, transform.position, transform.rotation);
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnDrawGizmos()
