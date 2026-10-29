@@ -3,8 +3,6 @@ using UnityEngine;
 public class InterpolateEmission : MonoBehaviour
 {
     [SerializeField] Material targetMaterial;
-    public float intensity;
-
     [SerializeField] Color emissionColor;
     [SerializeField] float minIntensity;
     [SerializeField] float maxIntensity;
@@ -20,8 +18,6 @@ public class InterpolateEmission : MonoBehaviour
 
     private void Update()
     {
-        targetMaterial.SetVector("_EmissionColor", Color.red * intensity);
-
         if (up == true)
         {
             if (currentIntensity < maxIntensity)

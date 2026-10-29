@@ -1947,7 +1947,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f855b075ce5e34bbffc759be47aa06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InterpolateEmission
-  targetMaterial: {fileID: 2100000, guid: 0ba619f1c0d75be4f90a0b555fdb9229, type: 2}
+  targetMaterial: {fileID: 2100000, guid: 9b7c3ebdff75cd7418134cfed4f54966, type: 2}
+  emissionColor: {r: 0, g: 1, b: 0, a: 0}
+  minIntensity: -1
+  maxIntensity: 1
+  currentIntensity: 0
+  speed: 1
+  up: 1
 --- !u!4 &964267284
 Transform:
   m_ObjectHideFlags: 0
@@ -2253,7 +2259,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0ba619f1c0d75be4f90a0b555fdb9229, type: 2}
+  - {fileID: 2100000, guid: 9b7c3ebdff75cd7418134cfed4f54966, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3179,7 +3185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1834497364
 AudioSource:
   m_ObjectHideFlags: 0
