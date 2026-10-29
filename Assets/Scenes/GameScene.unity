@@ -6497,7 +6497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 1509314735}
   disableObstacleOnEnable: 0
-  repetitionTime: 0.2
+  repetitionTime: 0.4
 --- !u!65 &278663533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7434,7 +7434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 3
 --- !u!114 &320826389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7449,7 +7449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 593205298}
   disableObstacleOnEnable: 0
-  repetitionTime: 0.2
+  repetitionTime: 0.4
 --- !u!65 &320826390
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11791,7 +11791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 4
 --- !u!114 &438976946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11806,7 +11806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 60189775}
   disableObstacleOnEnable: 0
-  repetitionTime: 0.2
+  repetitionTime: 0.4
 --- !u!65 &438976947
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12981,7 +12981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 814369663}
   disableObstacleOnEnable: 0
-  repetitionTime: 3
+  repetitionTime: 1.5
 --- !u!114 &487089088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12994,7 +12994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 2
 --- !u!1001 &498005471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14458,7 +14458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 4
 --- !u!65 &560659897
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16013,7 +16013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 3
 --- !u!1001 &625230996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23333,7 +23333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 392284314}
   disableObstacleOnEnable: 0
-  repetitionTime: 0.2
+  repetitionTime: 0.4
 --- !u!65 &907935760
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25126,7 +25126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 4
 --- !u!114 &1000714121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37949,7 +37949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 3
 --- !u!1001 &1491457841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41435,7 +41435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 3
 --- !u!65 &1635942356
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41655,7 +41655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 2
 --- !u!114 &1650600869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45122,7 +45122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 2
 --- !u!114 &1775137281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45137,7 +45137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowLauncherActivator
   obstacle: {fileID: 380363013}
   disableObstacleOnEnable: 0
-  repetitionTime: 0.2
+  repetitionTime: 0.4
 --- !u!65 &1775137282
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50382,7 +50382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 2
 --- !u!65 &1981544687
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -53509,7 +53509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 2
 --- !u!1001 &2085038247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54011,7 +54011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3d55f0b85e24045b74f4f68cf7266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelObstacle
-  level: 1
+  level: 2
 --- !u!114 &2102402263
 MonoBehaviour:
   m_ObjectHideFlags: 0
